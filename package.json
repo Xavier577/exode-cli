@@ -1,0 +1,22 @@
+{
+  "name": "excon-cli",
+  "version": "1.0.0",
+  "description": "a cli tool used to kick start express applications",
+  "main": "index.js",
+  "repository": "git@github.com:Xavier577/excon-cli.git",
+  "author": "joseph <josephtsegen10@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node lib/index.js",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^16.10.2",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^8.2.0"
+  }
+}

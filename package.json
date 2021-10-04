@@ -1,6 +1,6 @@
 {
   "name": "exnode",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "a cli tool used to kick start express applications",
   "main": "./lib/index.js",
   "files": [

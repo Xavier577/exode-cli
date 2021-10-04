@@ -1,30 +1,43 @@
-# Overview
+# Excon cli
 
-excon is a cli tool used to start an express project with typescript by default. It also has an option
-to use plain vanilla javascript.
+Excon is a cli tool used to start express typescript projects. It also has an option
+to drop down to plain vanilla javascript. It helps set things up so that you as the developer can focus
+more on development rather than annoying setup for every new project.
 
-# Commands
+# Usage
 
-> To start an express project
-
-```
-excon init yourProject
-```
-
-and ( if you don't have excon globally installed )
+> To start an express app with typescript
 
 ```
-npx excon init yourProject
+npx excon init appname
 ```
 
-> To start en express project without typescript
+if you have it installed globally
 
 ```
-excon init --js
+excon init appname
 ```
 
-and (if you don't have excon globally installed)
+> To strip down to plain Javascript
 
 ```
-npx excon init --js
+npx excon init appname -js
+```
+
+or
+
+```
+npx excon init appname --javascript
+```
+
+and if installed globally
+
+```
+excon init appname -js
+```
+
+or
+
+```
+excon init appname --javascript
 ```

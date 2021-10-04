@@ -9,7 +9,6 @@
     "strict": true,
     "types": ["node"],
     "esModuleInterop": true,
-    "declaration": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "baseUrl": ".",

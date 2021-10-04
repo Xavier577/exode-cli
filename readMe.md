@@ -1,4 +1,4 @@
-# Excon cli
+# Exnode cli
 
 Excon is a cli tool used to start express typescript projects. It also has an option
 to drop down to plain vanilla javascript. It helps set things up so that you as the developer can focus

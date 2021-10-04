@@ -1,24 +1,24 @@
 {
-  "name": "exnode",
-  "version": "0.0.5",
+  "name": "exode",
+  "version": "0.0.1",
   "description": "a cli tool used to kick start express applications",
   "main": "./lib/index.js",
   "files": [
     "lib"
   ],
-  "repository": "https://github.com/Xavier577/exnode-cli",
+  "repository": "https://github.com/Xavier577/exode-cli",
   "keywords": [
-    "exnode",
-    "exnode-cli",
+    "exode",
+    "exode-cli",
     "express typescript startup",
     "express nodejs"
   ],
   "author": "joseph <josephtsegen10@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Xavier577/exnode-cli/issues"
+    "url": "https://github.com/Xavier577/exode-cli/issues"
   },
-  "homepage": "https://github.com/Xavier577/exnode-cli#readme",
+  "homepage": "https://github.com/Xavier577/exode-cli#readme",
   "bin": "./lib/index.js",
   "scripts": {
     "build": "tsc"

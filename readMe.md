@@ -1,4 +1,4 @@
-# Exnode cli
+# Exode cli
 
 Exnode is a cli tool used to start express typescript projects. It also has an option
 to drop down to plain vanilla javascript. It helps set things up so that you as the developer can focus
@@ -9,35 +9,35 @@ more on development rather than annoying setup for every new project.
 > To start an express app with typescript
 
 ```
-npx exnode init appname
+npx exode init appname
 ```
 
 if you have it installed globally
 
 ```
-exnode init appname
+exode init appname
 ```
 
 > To strip down to plain Javascript
 
 ```
-npx exnode init appname -js
+npx exode init appname -js
 ```
 
 or
 
 ```
-npx exnode init appname --javascript
+npx exode init appname --javascript
 ```
 
 and if installed globally
 
 ```
-exnode init appname -js
+exode init appname -js
 ```
 
 or
 
 ```
-exnode init appname --javascript
+exode init appname --javascript
 ```

@@ -26,7 +26,7 @@ const createTsEnv = (projectName: string) => {
   mkdirSync(SRC);
   writeFileSync(INDEX_TS, indexTsFileBoilerplate);
 
-  process.nextTick(() => console.log(chalk.bgBlueBright("Happy hacking!")));
+  process.nextTick(() => console.log(chalk.blueBright("Happy hacking!")));
 };
 
 export default createTsEnv;

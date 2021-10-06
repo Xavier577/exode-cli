@@ -2,14 +2,14 @@ import chalk from "chalk";
 import createProjectDir from "./createProjectDir";
 import createTsEnv from "./createTsEnv";
 import createJsEnv from "./createJsEnv";
-import gitInit from "./gitInit";
+import addGitIgnore from "./gitInit";
 
 const startProject = (projectName: string, type: "js" | "ts" = "ts") => {
   createProjectDir(projectName);
 
   console.log(chalk.yellowBright("creating project..."));
 
-  gitInit(projectName);
+  addGitIgnore(projectName);
 
   if (type === "js") {
     createJsEnv(projectName);

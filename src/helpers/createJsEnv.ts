@@ -10,17 +10,19 @@ const createJsEnv = (projectName: string) => {
   const PACKAGE_JSON = path.join(currentDir, projectName, "package.json");
   const SRC = path.join(currentDir, projectName, "src");
   const INDEX_JS = path.join(currentDir, projectName, "src", "index.js");
+  const INSTALL_COMMAND = `cd ${projectName} && npx yarn add express && npx yarn add -D nodemon`;
+  const SUCESS_MESSAGE = chalk.blueBright("Happy Hacking!");
 
   writeFileSync(PACKAGE_JSON, writePackgeJson(projectName, "js"));
-
-  execSync(
-    `cd ${projectName} && npx yarn add express && npx yarn add -D nodemon`
-  );
-
   mkdirSync(SRC);
   writeFileSync(INDEX_JS, indexJsFileBoilerplate);
 
-  process.nextTick(() => console.log(chalk.blueBright("Happy hacking!")));
+  try {
+    execSync(INSTALL_COMMAND);
+    process.nextTick(() => console.log(SUCESS_MESSAGE));
+  } catch (error) {
+    console.error(chalk.redBright(error));
+  }
 };
 
 export default createJsEnv;

@@ -2,7 +2,7 @@ import chalk from "chalk";
 import createProjectDir from "./createProjectDir";
 import createTsEnv from "./createTsEnv";
 import createJsEnv from "./createJsEnv";
-import addGitIgnore from "./gitInit";
+import addGitIgnore from "./addGitIgnore";
 
 const startProject = (projectName: string, type: "js" | "ts" = "ts") => {
   createProjectDir(projectName);
@@ -11,11 +11,7 @@ const startProject = (projectName: string, type: "js" | "ts" = "ts") => {
 
   addGitIgnore(projectName);
 
-  if (type === "js") {
-    createJsEnv(projectName);
-  } else if (type === "ts") {
-    createTsEnv(projectName);
-  }
+  type === "js" ? createJsEnv(projectName) : createTsEnv(projectName);
 };
 
 export default startProject;

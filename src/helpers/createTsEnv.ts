@@ -14,19 +14,21 @@ const createTsEnv = (projectName: string) => {
   const TSCONFIG = path.join(currentDir, projectName, "tsconfig.json");
   const SRC = path.join(currentDir, projectName, "src");
   const INDEX_TS = path.join(currentDir, projectName, "src", "index.ts");
+  const INSTALL_COMMAND = `cd ${projectName} && npx yarn add express && npx yarn add -D typescript ts-node nodemon @types/node @types/express`;
+  const SUCESS_MESSAGE = chalk.blueBright("Happy Hacking!");
 
   writeFileSync(PACKAGE_JSON, writePackgeJson(projectName, "ts"));
 
-  execSync(
-    `cd ${projectName} && npx yarn add express && npx yarn add -D typescript ts-node nodemon @types/node @types/express`
-  );
-
-  writeFileSync(TSCONFIG, tsconfigBoilerplate);
-
   mkdirSync(SRC);
   writeFileSync(INDEX_TS, indexTsFileBoilerplate);
+  writeFileSync(TSCONFIG, tsconfigBoilerplate);
 
-  process.nextTick(() => console.log(chalk.blueBright("Happy hacking!")));
+  try {
+    execSync(INSTALL_COMMAND);
+    process.nextTick(() => console.log(SUCESS_MESSAGE));
+  } catch (error) {
+    console.error(chalk.redBright(error));
+  }
 };
 
 export default createTsEnv;

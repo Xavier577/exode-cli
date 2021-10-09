@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 import { Command } from "commander";
-import startProject from "./helpers/startProject";
+import projectStart from "./modules/projectStart";
 
 const program = new Command();
-program.version("0.0.4");
+program.version("0.0.5");
 
 program
   .command("init <projectname>")
   .option("-js, --javascript ", "add the specified type of cheese")
   .action((projectname, options) => {
     options.javascript
-      ? startProject(projectname, "js")
-      : startProject(projectname, "ts");
+      ? projectStart(projectname, "js")
+      : projectStart(projectname, "ts");
   });
 
 program.parse();

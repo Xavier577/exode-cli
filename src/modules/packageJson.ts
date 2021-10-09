@@ -1,4 +1,4 @@
-const writePackgeJson = (projectName: string, type: "js" | "ts" = "ts") => {
+const packgeJson = (projectName: string, type: "js" | "ts" = "ts") => {
   return type === "js"
     ? `{
      "name": "${projectName}",
@@ -23,4 +23,4 @@ const writePackgeJson = (projectName: string, type: "js" | "ts" = "ts") => {
    `;
 };
 
-export default writePackgeJson;
+export default packgeJson;

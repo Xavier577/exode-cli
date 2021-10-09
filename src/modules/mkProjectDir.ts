@@ -2,14 +2,14 @@ import chalk from "chalk";
 import { mkdirSync } from "fs";
 import path from "path";
 
-const createProjectDir = (projectName: string) => {
+const mkProjectDIr = (dirname: string) => {
   const currentDir = process.cwd();
 
   try {
-    mkdirSync(path.join(currentDir, projectName));
+    mkdirSync(path.join(currentDir, dirname));
   } catch (error: any) {
     if (error.code == "EEXIST") {
-      console.error(chalk.redBright(`${projectName} already exist`));
+      console.error(chalk.redBright(`${dirname} already exist`));
       process.exit();
     } else {
       console.error(error);
@@ -18,4 +18,4 @@ const createProjectDir = (projectName: string) => {
   }
 };
 
-export default createProjectDir;
+export default mkProjectDIr;

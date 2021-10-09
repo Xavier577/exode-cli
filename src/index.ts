@@ -7,7 +7,7 @@ program.version("0.0.5");
 
 program
   .command("init <projectname>")
-  .option("-js, --javascript ", "add the specified type of cheese")
+  .option("-js, --javascript ", "javascript mode")
   .action((projectname, options) => {
     options.javascript
       ? projectStart(projectname, "js")

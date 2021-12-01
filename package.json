@@ -1,6 +1,6 @@
 {
   "name": "exode",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "a cli tool used to kick start express applications",
   "main": "./lib/index.js",
   "files": [

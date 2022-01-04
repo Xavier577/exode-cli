@@ -1,43 +1,23 @@
 # Exode cli
 
-Exode is a cli tool used to start express typescript projects. It also has an option
-to drop down to plain vanilla javascript. It helps set things up so that you as the developer can focus
-more on development rather than annoying setup for every new project.
+Exode is a command-line utility for launching express typescript projects. There's also the option to use simple vanilla javascript. It assists with the initial configuration of things so that you, as the developer, may concentrate on development rather than the boring and repetitive setup for each new project. It is, however, non-opinionated, and you can use any ORM, Linter, or Library you like.
 
 # Usage
 
-> To start an express app with typescript
+> To start an express app with Typescript (which is the default behaviour)
 
 ```
 $ npx exode init appname
 ```
 
-if you have it installed globally
+> To use Javascript Instead of Typescript
 
 ```
-$ exode init appname
-```
-
-> To strip down to plain Javascript
-
-```
-$ `npx exode init appname -js
+$ npx exode init appname -js
 ```
 
 or
 
 ```
 $ npx exode init appname --javascript
-```
-
-and if installed globally
-
-```
-$ exode init appname -js
-```
-
-or
-
-```
-$ exode init appname --javascript
 ```

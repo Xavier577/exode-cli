@@ -2,28 +2,33 @@ import { execSync } from "child_process";
 import path from "path";
 import { mkdirSync, writeFileSync } from "fs";
 import packgeJson from "./packageJson";
-import { indexJsFileBoilerplate } from "../boilerplates/javascriptBoilerplate";
+import {
+    indexJsFileBoilerplate,
+    appJsFileBoilerplate,
+} from "../boilerplates/javascriptBoilerplate";
 import chalk from "chalk";
 
 const jsEnv = (projectName: string, projectDir: string) => {
-  const INDEX_JS = path.join(projectDir, "src", "index.js");
-  const INSTALL_COMMAND = `cd ${projectDir} && npx yarn add express && npx yarn add -D nodemon`;
-  const PACKAGE_JSON = path.join(projectDir, "package.json");
-  const SRC = path.join(projectDir, "src");
-  const SUCESS_MESSAGE = chalk.blueBright("Happy Hacking!");
+    const INDEX_JS = path.join(projectDir, "src", "index.js");
+    const APP_JS = path.join(projectDir, "src", "app.js");
+    const INSTALL_COMMAND = `cd ${projectDir} && npx yarn add express  && npx yarn add -D nodemon`;
+    const PACKAGE_JSON = path.join(projectDir, "package.json");
+    const SRC = path.join(projectDir, "src");
+    const SUCESS_MESSAGE = chalk.blueBright("Happy Hacking!");
 
-  writeFileSync(PACKAGE_JSON, packgeJson(projectName, "js"));
+    writeFileSync(PACKAGE_JSON, packgeJson(projectName, "js"));
 
-  mkdirSync(SRC);
+    mkdirSync(SRC);
 
-  writeFileSync(INDEX_JS, indexJsFileBoilerplate);
+    writeFileSync(INDEX_JS, indexJsFileBoilerplate);
+    writeFileSync(APP_JS, appJsFileBoilerplate);
 
-  try {
-    execSync(INSTALL_COMMAND);
-    process.nextTick(() => console.log(SUCESS_MESSAGE));
-  } catch (error) {
-    console.error(chalk.redBright(error));
-  }
+    try {
+        execSync(INSTALL_COMMAND);
+        process.nextTick(() => console.log(SUCESS_MESSAGE));
+    } catch (error) {
+        console.error(chalk.redBright(error));
+    }
 };
 
 export default jsEnv;

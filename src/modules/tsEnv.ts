@@ -5,11 +5,13 @@ import path from "path";
 import packgeJson from "./packageJson";
 import {
   indexTsFileBoilerplate,
+  appTSFileBoilerplate,
   tsconfigBoilerplate,
 } from "../boilerplates/typescriptBoilerplate";
 
 const tsEnv = (projectName: string, projectDir: string) => {
   const INDEX_TS = path.join(projectDir, "src", "index.ts");
+  const APP_TS = path.join(projectDir, "src", "app.ts");
   const INSTALL_COMMAND = `cd ${projectDir} && npx yarn add express && npx yarn add -D typescript ts-node nodemon @types/node @types/express`;
   const PACKAGE_JSON = path.join(projectDir, "package.json");
   const SRC = path.join(projectDir, "src");
@@ -21,6 +23,7 @@ const tsEnv = (projectName: string, projectDir: string) => {
 
   mkdirSync(SRC);
   writeFileSync(INDEX_TS, indexTsFileBoilerplate);
+  writeFileSync(APP_TS, appTSFileBoilerplate);
 
   try {
     execSync(INSTALL_COMMAND);

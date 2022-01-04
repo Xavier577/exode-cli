@@ -1,14 +1,25 @@
-export const indexTsFileBoilerplate = `import express from "express";
-const app = express()
+export const indexTsFileBoilerplate = `import http from "http";
+import app from "./app";
 
+const server = http.createServer(app)
 const PORT = process.env.PORT || 8080; 
-const hostname = "127.0.0.1";
 
-app.get("/", (_req,res) => {
-             res.send("<h2>Let's code!</h2>")
+process.env.NODE_ENV !== "production" && server.on("listening", () => {
+  console.log(\`listening on http://localhost:\${PORT}\`);
+})
+
+server.listen(PORT);
+`;
+
+export const appTSFileBoilerplate = `import express from "express";
+
+const app = express();
+
+app.get("/", (_req, res) => {
+  res.send("<h1>let's code!</h1>");
 });
 
-app.listen(PORT as number,hostname, () => console.log(\`listening on http://\${hostname}:\${PORT}\`))
+export default app;
 `;
 
 export const tsconfigBoilerplate = `{

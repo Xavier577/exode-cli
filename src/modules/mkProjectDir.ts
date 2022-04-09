@@ -2,7 +2,7 @@ import chalk from "chalk";
 import { mkdirSync } from "fs";
 import path from "path";
 
-const mkProjectDIr = (dirname: string) => {
+const mkProjectDir = (dirname: string) => {
   const currentDir = process.cwd();
 
   try {
@@ -18,4 +18,4 @@ const mkProjectDIr = (dirname: string) => {
   }
 };
 
-export default mkProjectDIr;
+export default mkProjectDir;

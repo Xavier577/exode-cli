@@ -1,17 +1,14 @@
 #!/usr/bin/env node
-import { Command } from "commander";
-import projectStart from "./modules/projectStart";
+import { program } from "commander";
+import ExodeCLI from "./main";
+import CLIFeatures from "./features";
+// import projectStart from "./modules/projectStart";
+//@ts-ignore
+import * as packageConfig from "../package.json";
 
-const program = new Command();
-program.version("0.0.9");
 
-program
-    .command("init <projectname>")
-    .option("-js, --javascript ", "javascript mode")
-    .action((projectname, options) => {
-        options.javascript
-            ? projectStart(projectname, "js")
-            : projectStart(projectname, "ts");
-    });
-
-program.parse();
+ExodeCLI.run({
+    version: packageConfig.version,
+    program,
+    cliFeatures: CLIFeatures.main 
+})

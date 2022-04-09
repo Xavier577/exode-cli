@@ -2,7 +2,7 @@ import chalk from "chalk";
 import path from "path";
 import addGitIgnore from "./addGitIgnore";
 import jsEnv from "./jsEnv";
-import mkProjectDIr from "./mkProjectDir";
+import mkProjectDir from "./mkProjectDir";
 import tsEnv from "./tsEnv";
 
 const projectStart = (projectNameArg: string, type: "js" | "ts" = "ts") => {
@@ -15,7 +15,7 @@ const projectStart = (projectNameArg: string, type: "js" | "ts" = "ts") => {
   } else {
     projectName = projectNameArg;
     projectDir = path.join(process.cwd(), projectName);
-    mkProjectDIr(projectName);
+    mkProjectDir(projectName);
   }
 
   console.log(chalk.yellowBright("setting up project...."));

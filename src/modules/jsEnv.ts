@@ -2,11 +2,11 @@ import { execSync } from "child_process";
 import path from "path";
 import { mkdirSync, writeFileSync } from "fs";
 import packgeJson from "./packageJson";
-import {
-    indexJsFileBoilerplate,
-    appJsFileBoilerplate,
-} from "../boilerplates/javascriptBoilerplate";
 import chalk from "chalk";
+
+const indexJsFileBoilerplate = ""
+
+const appJsFileBoilerplate = ""
 
 const jsEnv = (projectName: string, projectDir: string) => {
     const INDEX_JS = path.join(projectDir, "src", "index.js");

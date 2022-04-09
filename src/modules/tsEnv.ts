@@ -15,7 +15,7 @@ const tsEnv = (projectName: string, projectDir: string) => {
   const INSTALL_COMMAND = `cd ${projectDir} && npx yarn add express && npx yarn add -D typescript ts-node nodemon @types/node @types/express`;
   const PACKAGE_JSON = path.join(projectDir, "package.json");
   const SRC = path.join(projectDir, "src");
-  const SUCESS_MESSAGE = chalk.blueBright("Happy Hacking!");
+  const SUCCESS_MESSAGE = chalk.blueBright("Happy Hacking!");
   const TSCONFIG = path.join(projectDir, "tsconfig.json");
 
   writeFileSync(PACKAGE_JSON, packgeJson(projectName, "ts"));
@@ -27,7 +27,7 @@ const tsEnv = (projectName: string, projectDir: string) => {
 
   try {
     execSync(INSTALL_COMMAND);
-    process.nextTick(() => console.log(SUCESS_MESSAGE));
+    process.nextTick(() => console.log(SUCCESS_MESSAGE));
   } catch (error) {
     console.error(chalk.redBright(error));
   }

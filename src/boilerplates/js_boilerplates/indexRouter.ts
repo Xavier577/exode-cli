@@ -1,5 +1,5 @@
 const indexRouter = `const { Router } = require("express");
-const indexController = require("../controller/index.controller");
+const indexController = require("../controllers/index.controller");
 const apiRouter = Router();
 
 apiRouter.get("/", indexController);
@@ -7,5 +7,4 @@ apiRouter.get("/", indexController);
 module.exports = apiRouter;
 `;
 
-
-export default indexRouter
+export default indexRouter;

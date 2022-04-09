@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { mkdirSync, writeFileSync } from "fs";
 import path from "path";
-import ora, { Color } from "ora";
+import { Ora, promise as OraPromise } from "ora";
 import { SyncErrorProneFnWrapper } from "../utils/synchronous-error-prone-wrapper";
 import {
     indexJs,
@@ -17,6 +17,7 @@ import gitIgnoreBoilerplate from "../boilerplates/others/gitIgnoreBoilerplate";
 export default class CreateExodeJs {
     protected static projectName: string;
     protected static projectDir: string;
+    protected static inCwd = false;
     protected static dependencyInstallCommand: string;
     protected static files: {
         [name: string]: { dir: string; boilerplate: string };
@@ -24,20 +25,14 @@ export default class CreateExodeJs {
     protected static folders: { [name: string]: string };
     protected static CLI_SUCCESS_MESSAGE = "Happy Hacking!";
     protected static allPathChar = ["*", ".", "./"];
-    protected static spinnerColors: Color[] = ["blue", "yellow", "green"];
-    protected static spinnerColorsLength = CreateExodeJs.spinnerColors.length;
+    protected static globalSpinner: Ora;
 
-    public static run() {
-        CreateExodeJs.makeRootDir();
-        CreateExodeJs.makeProjectFolders();
-        CreateExodeJs.makeProjectFiles();
-        CreateExodeJs.installDependencies();
-    }
-
-    protected static randomColor() {
-        const lastElemIdx = CreateExodeJs.spinnerColors.length - 1;
-        const randomIndex = lastElemIdx * Math.random();
-        return CreateExodeJs.spinnerColors[randomIndex];
+    public static async run() {
+        !CreateExodeJs.inCwd && (await CreateExodeJs.makeRootDir());
+        await CreateExodeJs.makeProjectFolders();
+        await CreateExodeJs.makeProjectFiles();
+        await CreateExodeJs.installDependencies();
+        CreateExodeJs.end();
     }
 
     protected static runBetweenSpinner(message: string) {
@@ -48,19 +43,19 @@ export default class CreateExodeJs {
         ) => {
             const originalMethod = descriptor.value;
 
-            descriptor.value = function (...args: any[]) {
-                const currentSpinner = ora(message).start();
-                currentSpinner.color = CreateExodeJs.randomColor();
-                originalMethod.apply(this, args);
-                currentSpinner.succeed();
+            descriptor.value = async function (...args: any[]) {
+                const spinner = OraPromise(originalMethod.apply(this, args), {
+                    color: "blue",
+                    text: message,
+                }).start();
+                CreateExodeJs.globalSpinner = spinner;
             };
         };
     }
 
     public static setProjectProps(projectName: string) {
-        CreateExodeJs.projectName = CreateExodeJs.allPathChar.includes(
-            projectName
-        )
+        CreateExodeJs.inCwd = CreateExodeJs.allPathChar.includes(projectName);
+        CreateExodeJs.projectName = CreateExodeJs.inCwd
             ? path.basename(path.resolve())
             : projectName;
         CreateExodeJs.projectDir = CreateExodeJs.allPathChar.includes(
@@ -135,26 +130,6 @@ export default class CreateExodeJs {
         };
     }
 
-    @CreateExodeJs.runBetweenSpinner("creating root dir")
-    protected static makeRootDir() {
-        const [_, error] = SyncErrorProneFnWrapper(() =>
-            mkdirSync(CreateExodeJs.projectDir)
-        );
-
-        if (error?.code == "EEXIST") {
-            const errMessage = chalk.redBright(
-                `${CreateExodeJs.projectName} already Exists`
-            );
-            console.error(errMessage);
-            process.exit(1);
-        }
-
-        if (error) {
-            console.error(error);
-            process.exit(1);
-        }
-    }
-
     protected static makePackageJson() {
         return `{
      "name": "${CreateExodeJs.projectName}",
@@ -167,8 +142,29 @@ export default class CreateExodeJs {
    }`;
     }
 
+    @CreateExodeJs.runBetweenSpinner("creating root dir")
+    protected static async makeRootDir() {
+        const [_, error] = SyncErrorProneFnWrapper(() =>
+            mkdirSync(CreateExodeJs.projectDir)
+        );
+
+        if (error?.code == "EEXIST") {
+            const errMessage = chalk.redBright(
+                `${CreateExodeJs.projectName} already Exists`
+            );
+            CreateExodeJs.globalSpinner.text = errMessage;
+            CreateExodeJs.globalSpinner.fail();
+            process.exit(1);
+        }
+
+        if (error) {
+            console.error(error);
+            process.exit(1);
+        }
+    }
+
     @CreateExodeJs.runBetweenSpinner("Creating folders")
-    protected static makeProjectFolders() {
+    protected static async makeProjectFolders() {
         for (let folderName in CreateExodeJs.folders) {
             const [_, error] = SyncErrorProneFnWrapper(() =>
                 mkdirSync(CreateExodeJs.folders[folderName])
@@ -180,7 +176,7 @@ export default class CreateExodeJs {
     }
 
     @CreateExodeJs.runBetweenSpinner("Creating files")
-    protected static makeProjectFiles() {
+    protected static async makeProjectFiles() {
         for (let fileName in CreateExodeJs.files) {
             const file = CreateExodeJs.files[fileName];
             const [_, error] = SyncErrorProneFnWrapper(() =>
@@ -192,11 +188,15 @@ export default class CreateExodeJs {
         }
     }
 
-    @CreateExodeJs.runBetweenSpinner("Installing depencies")
-    protected static installDependencies() {
-        const [_, error] = SyncErrorProneFnWrapper(() =>
-            execSync(CreateExodeJs.dependencyInstallCommand)
-        );
+    @CreateExodeJs.runBetweenSpinner("Installing dependencies")
+    protected static async installDependencies() {
+        const [_, error] = SyncErrorProneFnWrapper(() => {
+            execSync(CreateExodeJs.dependencyInstallCommand);
+        });
         if (error) console.error(chalk.redBright(error));
+    }
+
+    protected static end() {
+        console.log(chalk.blueBright(CreateExodeJs.CLI_SUCCESS_MESSAGE));
     }
 }

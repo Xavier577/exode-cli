@@ -1,7 +1,7 @@
 const indexJs = `const http = require("http");
 const app = require("./app");
-const server = http.createServer(app); 
 
+const server = http.createServer(app); 
 const PORT = process.env.PORT || 8080; 
 
 process.env.NODE_ENV !== "production" && server.on("listening",() => {
@@ -11,4 +11,4 @@ process.env.NODE_ENV !== "production" && server.on("listening",() => {
 server.listen(PORT);
 `;
 
-export default indexJs
+export default indexJs;

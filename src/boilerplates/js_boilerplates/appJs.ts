@@ -2,7 +2,7 @@ const appJs = `const express = require("express");
 const cors = require("cors");
 
 const app = express();
-const apiRoutes = require("./api/routes");
+const apiRoutes = require("./api/routes/index.router");
 
 app.use(cors());
 app.use(express.json());

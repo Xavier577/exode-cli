@@ -12,7 +12,7 @@ import {
     asyncWrapper,
 } from "../boilerplates/js_boilerplates";
 import { execSync } from "child_process";
-import gitIgnoreBoilerplate from "../boilerplates/gitIgnoreBoilerplate";
+import gitIgnoreBoilerplate from "../boilerplates/others/gitIgnoreBoilerplate";
 
 export default class CreateExodeJs {
     protected static projectName: string;
@@ -24,39 +24,35 @@ export default class CreateExodeJs {
     protected static folders: { [name: string]: string };
     protected static CLI_SUCCESS_MESSAGE = "Happy Hacking!";
     protected static allPathChar = ["*", ".", "./"];
-    protected static globalSpinner = ora();
     protected static spinnerColors: Color[] = ["blue", "yellow", "green"];
     protected static spinnerColorsLength = CreateExodeJs.spinnerColors.length;
 
-    public static run() {
+    public static async run() {
         // runs the cli in  js mode
-        CreateExodeJs.globalSpinner.color = CreateExodeJs.randomColor();
-        CreateExodeJs.globalSpinner.start("creating project");
-        CreateExodeJs.makeRootDir();
-        CreateExodeJs.makeProjectFolders();
-        CreateExodeJs.makeProjectFiles();
-        CreateExodeJs.installDependencies();
+        await CreateExodeJs.makeRootDir();
+        await CreateExodeJs.makeProjectFolders();
+        await CreateExodeJs.makeProjectFiles();
+        await CreateExodeJs.installDependencies();
     }
 
     protected static randomColor() {
-        const colorsLength = CreateExodeJs.spinnerColors.length;
-        const randomIndex = colorsLength * Math.random();
+        const lastElemIdx = CreateExodeJs.spinnerColors.length - 1;
+        const randomIndex = lastElemIdx * Math.random();
         return CreateExodeJs.spinnerColors[randomIndex];
     }
 
     protected static runBetweenSpinner(message: string) {
-        return (
+        return  (
             _target: any,
             _property: string,
             descriptor: TypedPropertyDescriptor<any>
         ) => {
-            const original = descriptor.value;
+            const originalMethod = descriptor.value;
 
-            descriptor.value = function (...args: any[]) {
-                const currentSpinner = CreateExodeJs.globalSpinner.render();
+            descriptor.value = async function (...args: any[]) {
+                const currentSpinner = ora(message).start();
                 currentSpinner.color = CreateExodeJs.randomColor();
-                currentSpinner.start(message);
-                original.apply(this, args);
+                await originalMethod.apply(this, args);
                 currentSpinner.succeed();
             };
         };
@@ -73,7 +69,7 @@ export default class CreateExodeJs {
         )
             ? process.cwd()
             : path.join(process.cwd(), projectName);
-        CreateExodeJs.dependencyInstallCommand = `cd ${CreateExodeJs.projectDir} && npx yarn add express  && npx yarn add -D nodemon`;
+        CreateExodeJs.dependencyInstallCommand = `cd ${CreateExodeJs.projectDir} && npx yarn add express cors dotenv && npx yarn add -D nodemon`;
         CreateExodeJs.setProjectFolderStructure();
     }
 
@@ -92,6 +88,10 @@ export default class CreateExodeJs {
             services: path.join(src, "api", "services"),
         };
         CreateExodeJs.files = {
+            dotEnv: {
+                dir: path.join(CreateExodeJs.projectDir, ".env"),
+                boilerplate: "",
+            },
             gitIgnore: {
                 dir: path.join(CreateExodeJs.projectDir, ".gitignore"),
                 boilerplate: gitIgnoreBoilerplate,
@@ -188,7 +188,7 @@ export default class CreateExodeJs {
                 writeFileSync(file.dir, file.boilerplate)
             );
             if (error) {
-                console.error(chalk.redBright(error));
+                console.error("while creating file",chalk.redBright(error));
             }
         }
     }
@@ -198,6 +198,6 @@ export default class CreateExodeJs {
         const [_, error] = SyncErrorProneFnWrapper(() =>
             execSync(CreateExodeJs.dependencyInstallCommand)
         );
-        console.error(chalk.redBright(error));
+        console.error("while installing deps",chalk.redBright(error));
     }
 }

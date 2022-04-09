@@ -16,7 +16,7 @@ export default class ExodeCLI {
         program
             .command(ExodeCLI.command)
             .option(ExodeCLI.options)
-            .action(cliFeatures)
+            .action(cliFeatures);
         program.parse();
     }
 }

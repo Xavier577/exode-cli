@@ -27,12 +27,11 @@ export default class CreateExodeJs {
     protected static spinnerColors: Color[] = ["blue", "yellow", "green"];
     protected static spinnerColorsLength = CreateExodeJs.spinnerColors.length;
 
-    public static async run() {
-        // runs the cli in  js mode
-        await CreateExodeJs.makeRootDir();
-        await CreateExodeJs.makeProjectFolders();
-        await CreateExodeJs.makeProjectFiles();
-        await CreateExodeJs.installDependencies();
+    public static run() {
+        CreateExodeJs.makeRootDir();
+        CreateExodeJs.makeProjectFolders();
+        CreateExodeJs.makeProjectFiles();
+        CreateExodeJs.installDependencies();
     }
 
     protected static randomColor() {
@@ -42,17 +41,17 @@ export default class CreateExodeJs {
     }
 
     protected static runBetweenSpinner(message: string) {
-        return  (
+        return (
             _target: any,
             _property: string,
             descriptor: TypedPropertyDescriptor<any>
         ) => {
             const originalMethod = descriptor.value;
 
-            descriptor.value = async function (...args: any[]) {
+            descriptor.value = function (...args: any[]) {
                 const currentSpinner = ora(message).start();
                 currentSpinner.color = CreateExodeJs.randomColor();
-                await originalMethod.apply(this, args);
+                originalMethod.apply(this, args);
                 currentSpinner.succeed();
             };
         };
@@ -188,7 +187,7 @@ export default class CreateExodeJs {
                 writeFileSync(file.dir, file.boilerplate)
             );
             if (error) {
-                console.error("while creating file",chalk.redBright(error));
+                console.error(chalk.redBright(error));
             }
         }
     }
@@ -198,6 +197,6 @@ export default class CreateExodeJs {
         const [_, error] = SyncErrorProneFnWrapper(() =>
             execSync(CreateExodeJs.dependencyInstallCommand)
         );
-        console.error("while installing deps",chalk.redBright(error));
+        if (error) console.error(chalk.redBright(error));
     }
 }

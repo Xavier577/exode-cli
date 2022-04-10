@@ -1,28 +1,4 @@
-export const indexTsFileBoilerplate = `import http from "http";
-import app from "./app";
-
-const server = http.createServer(app)
-const PORT = process.env.PORT || 8080; 
-
-process.env.NODE_ENV !== "production" && server.on("listening", () => {
-  console.log(\`listening on http://localhost:\${PORT}\`);
-})
-
-server.listen(PORT);
-`;
-
-export const appTSFileBoilerplate = `import express from "express";
-
-const app = express();
-
-app.get("/", (_req, res) => {
-  res.send("<h1>let's code!</h1>");
-});
-
-export default app;
-`;
-
-export const tsconfigBoilerplate = `{
+const tsconfig = `{
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
@@ -51,3 +27,5 @@ export const tsconfigBoilerplate = `{
   "include": ["./src/**/*.ts"]
 }
 `;
+
+export default tsconfig;

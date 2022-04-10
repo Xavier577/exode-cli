@@ -19,6 +19,7 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "removeComments": true
+    "noEmitOnError": true,
+    "removeComments": true,
   }
 }

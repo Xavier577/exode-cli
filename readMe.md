@@ -4,7 +4,21 @@ Exode is a command-line utility for launching express typescript projects. There
 
 # Usage
 
-> To start an express app with Typescript (which is the default behaviour)
+```shell
+Usage: exode [options] [command]
+
+Options:
+  -V, --version                 output the version number
+  -h, --help                    display help for command
+
+Commands:
+  init [options] <projectname>
+  help [command]                display help for command
+```
+
+# Examples
+
+> Creating an express app project with Typescript (default behavior)
 
 ```
 $ npx exode init appname
